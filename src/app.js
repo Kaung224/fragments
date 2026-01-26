@@ -11,6 +11,7 @@ const pino = require('pino-http')({
 const passport = require('passport');
 const authenticate = require('./auth');
 const compression = require('compression');
+const { createErrorResponse } = require('./response');
 
 const app = express();
 
@@ -25,13 +26,7 @@ app.use(passport.initialize());
 app.use('/', require('./routes'));
 
 app.use((req, res) => {
-  res.status(404).json({
-    status: 'error',
-    error: {
-      message: 'not found',
-      code: 404,
-    },
-  });
+  res.status(404).json(createErrorResponse(404, 'not found'));
 });
 
 // eslint-disable-next-line no-unused-vars
