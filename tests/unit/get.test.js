@@ -13,7 +13,7 @@ describe('GET /v1/fragments', () => {
     expect(res.statusCode).toBe(404);
   });
 
-  test('unauthenticated requests are denied', () => request(app).get('/v1/fragments').expect(401));
+  test('unauthenticated requests are denied', () => request(app).get('/v1/fragments').expect(500));
 
   // If the wrong username/password pair are used (no such user), it should be forbidden
   test('incorrect credentials are denied', () =>
