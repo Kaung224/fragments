@@ -28,6 +28,7 @@ router.get('/', (req, res) => {
     githubUrl: 'https://github.com/Kaung224/fragments',
     version,
     timestamp: new Date().toISOString(),
+    fragments: [],
   });
 });
 
