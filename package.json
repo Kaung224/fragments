@@ -8,6 +8,7 @@
     "test": "jest -c jest.config.js --runInBand --",
     "coverage": "jest -c jest.config.js --runInBand --coverage",
     "lint": "eslint \"./src/**/*.js\" \"tests/**/*.js\"",
+    "start0" : "HTPASSWD_FILE=${HTPASSWD_FILE=tests/test.httpasswd} node src/index.js",
     "start": "node src/index.js",
     "dev": "node --env-file=.env.debug --watch ./src/index.js",
     "debug": "node --env-file=.env.debug --inspect=0.0.0.0:9229 --watch ./src/index.js"
