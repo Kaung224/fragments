@@ -9,6 +9,9 @@ const express = require('express');
 const router = express.Router();
 const contentType = require('content-type');
 const { Fragment } = require('../../model/fragment');
+const logger = require('../../logger');
+
+logger.info('Initializing API routes');
 
 // Support sending various Content-Types on the body up to 5M in size
 const rawBody = () =>
@@ -21,8 +24,10 @@ const rawBody = () =>
       // will be equal to an empty Object `{}` and `Buffer.isBuffer(req.body) === false`
       try {
         const { type } = contentType.parse(req);
+        logger.debug(`Received request with Content-Type: ${type}`);
         return Fragment.isSupportedType(type);
-      } catch {
+      } catch (err) {
+        logger.warn(`Failed to parse Content-Type header: ${err.message}`);
         return false;
       }
     },
@@ -30,10 +35,12 @@ const rawBody = () =>
 
 // Use a raw body parser for POST, which will give a `Buffer` Object or `{}` at `req.body`
 // You can use Buffer.isBuffer(req.body) to test if it was parsed by the raw body parser.
-router.post('/fragments', rawBody(), require('./post'));
 
 // Define our first route, which will be: GET /v1/fragments
 router.get('/fragments', require('./get'));
 // Other routes (POST, DELETE, etc.) will go here later on...
+router.post('/fragments', rawBody(), require('./post'));
+
+logger.info('API routes initialized successfully');
 
 module.exports = router;
