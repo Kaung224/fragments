@@ -30,6 +30,8 @@ module.exports = (strategyName) => {
 
       // Authorized. Hash the user's email, attach to the request, and continue
       req.user = hash(email);
+      logger.info(`Authenticated user email: "${email}"`);
+      logger.info(`Hashed ownerId: ${req.user}`);
       logger.debug({ email, hash: req.user }, 'Authenticated user');
 
       // Call the next function in the middleware chain (e.g. your route handler)
