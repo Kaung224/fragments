@@ -14,14 +14,12 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // Get the fragment to verify it exists and belongs to the user
     const fragment = await Fragment.byId(ownerId, id);
     if (!fragment) {
       logger.warn(`Fragment not found: ${id} for user ${ownerId}`);
       return res.status(404).json(createErrorResponse(404, 'Fragment not found'));
     }
 
-    // Delete the fragment
     await Fragment.delete(ownerId, id);
     logger.debug(`Fragment deleted: ${id}`);
 
