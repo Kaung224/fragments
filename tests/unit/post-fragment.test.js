@@ -68,4 +68,13 @@ describe('POST /v1/fragments', () => {
 
     expect(res.statusCode).toBe(415);
   });
+
+  test('request body must be a Buffer', async () => {
+    const res = await request(authedApp)
+      .post('/v1/fragments')
+      .send(JSON.stringify({ not: 'a buffer' }));
+
+    expect(res.statusCode).toBe(415);
+    expect(res.body.status).toBe('error');
+  });
 });
