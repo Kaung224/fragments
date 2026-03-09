@@ -13,7 +13,7 @@ const router = express.Router();
  */
 router.use(`/v1`, authenticate(), require('./api'));
 
-router.get('/v1/fragments/:id/info', authenticate(), require('./api/getByIdInfo'));
+router.get('/fragments/:id/info', authenticate(), require('./api/getByIdInfo'));
 
 /**
  * Define a simple health check route. If the server is running
