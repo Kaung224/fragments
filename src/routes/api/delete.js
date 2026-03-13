@@ -25,6 +25,10 @@ module.exports = async (req, res) => {
 
     res.status(200).json(createSuccessResponse());
   } catch (error) {
+    if (error.message.includes('not found')) {
+      logger.warn(`Fragment not found: ${id} for user ${ownerId}`);
+      return res.status(404).json(createErrorResponse(404, 'Fragment not found'));
+    }
     logger.error({ err: error }, `Error deleting fragment ${id}`);
     res.status(500).json(createErrorResponse(500, 'Unable to delete fragment'));
   }
