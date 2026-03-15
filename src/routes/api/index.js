@@ -39,7 +39,7 @@ const rawBody = () =>
 // Define our routes
 router.get('/fragments', require('./get'));
 router.get('/fragments/:id/info', require('./getByIdInfo'));
-router.get('/fragments/:id.:ext', require('./getByIdExt'));
+router.get('/fragments/:id([^/]+\\.[^/]+)', require('./getByIdExt'));
 router.get('/fragments/:id', require('./read'));
 router.post('/fragments', rawBody(), require('./post'));
 router.delete('/fragments/:id', require('./delete'));
