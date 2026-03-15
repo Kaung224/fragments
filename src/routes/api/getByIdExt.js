@@ -19,6 +19,10 @@ module.exports = async (req, res) => {
   const ownerId = req.user;
   const { id, ext } = req.params;
 
+  // ADD THESE TWO LINES HERE
+  logger.debug(`ownerId: ${JSON.stringify(ownerId)}`);
+  logger.debug(`looking for fragment id: ${id}`);
+
   logger.info(`Handling GET /v1/fragments/${id}.${ext} request`);
 
   if (!ownerId) {
