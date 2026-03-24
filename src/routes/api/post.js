@@ -22,10 +22,13 @@ module.exports = async (req, res) => {
     });
   }
 
-  let type;
+  let rawType, parsed, type;
+
   try {
-    type = contentType.parse(req).type;
-    logger.debug(`Parsed Content-Type: ${type}`);
+    rawType = req.get('Content-Type');
+    parsed = contentType.parse(rawType);
+    type = parsed.type; // stripped version for validation
+    logger.debug(`Parsed Content-Type: ${rawType}`);
   } catch (err) {
     logger.warn(`Failed to parse Content-Type header: ${err.message}`);
     return res.status(415).json({
@@ -35,16 +38,16 @@ module.exports = async (req, res) => {
   }
 
   if (!Fragment.isSupportedType(type)) {
-    logger.warn(`Unsupported Content-Type: ${type}`);
+    logger.warn(`Unsupported Content-Type: ${rawType}`);
     return res.status(415).json({
       status: 'error',
-      message: `Unsupported Type: ${type}`,
+      message: `Unsupported Type: ${rawType}`,
     });
   }
 
   const fragment = new Fragment({
     ownerId,
-    type,
+    type: rawType, // store full type including charset
     size: req.body.length,
   });
 

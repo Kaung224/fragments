@@ -25,31 +25,17 @@ WORKDIR /app
 
 COPY --from=dependencies /app/node_modules ./node_modules
 
-# Environment variables
-# We default to use port 8080 in our service
-ENV PORT=8080
-ENV NODE_ENV=production
-
-# Reduce npm spam when installing within Docker
-# https://docs.npmjs.com/cli/v8/using-npm/config#loglevel
-ENV NPM_CONFIG_LOGLEVEL=warn
-
-# Disable color when run inside Docker
-# https://docs.npmjs.com/cli/v8/using-npm/config#color
-ENV NPM_CONFIG_COLOR=false
-
-# Change ownership of files
+# Copy the entire project first
 COPY --chown=node:node . /app
 
-# Switch to non-root user
+# THEN copy .htpasswd so it doesn't get overwritten
+COPY tests/.htpasswd /app/tests/.htpasswd
+
 USER node
 
-# We run our service on port 8080
 EXPOSE 8080
 
-# HealthCheck
 HEALTHCHECK --interval=3m --timeout=30s --retries=3 \
   CMD curl -f http://localhost:8080/health || exit 1
 
-# Start the container by running our server
 CMD ["npm", "start"]
