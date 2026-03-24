@@ -14,6 +14,9 @@
     "debug": "node --env-file=.env.debug --inspect=0.0.0.0:9229 --watch ./src/index.js",
     "test:integration": "docker run --rm -v C:/Users/Kaung/Downloads/cloud-for-programmers/fragments:/workspace -w /workspace ghcr.io/orange-opensource/hurl:latest --test --glob \"tests/integration/**/*.hurl\""
   },
+  "jest": {
+    "setupFiles": ["<rootDir>/tests/setup.js"]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kaung224/fragments.git"

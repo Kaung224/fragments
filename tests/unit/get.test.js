@@ -1,5 +1,4 @@
 // tests/unit/get.test.js
-
 const request = require('supertest');
 
 const app = require('../../src/app');
@@ -7,9 +6,7 @@ const app = require('../../src/app');
 describe('GET /v1/fragments', () => {
   // If the request is missing the Authorization header, it should be forbidden
   test('Invalid routes requests are denied', async () => {
-    const res = await request(app)
-      .get('/v1/invalid-route')
-      .auth('test-user1@fragments-testing.com', 'test-password1');
+    const res = await request(app).get('/v1/invalid-route').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(404);
   });
 
@@ -21,9 +18,7 @@ describe('GET /v1/fragments', () => {
 
   // Using a valid username/password pair should give a success result with a .fragments array
   test('authenticated users get a fragments array', async () => {
-    const res = await request(app)
-      .get('/v1/fragments')
-      .auth('test-user1@fragments-testing.com', 'test-password1');
+    const res = await request(app).get('/v1/fragments').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBe('ok');
     expect(Array.isArray(res.body.fragments)).toBe(true);
@@ -31,18 +26,14 @@ describe('GET /v1/fragments', () => {
 
   // TODO: we'll need to add tests to check the contents of the fragments array later
   test('authenticated users get a fragments array', async () => {
-    const res = await request(app)
-      .get('/v1/fragments')
-      .auth('test-user1@fragments-testing.com', 'test-password1');
+    const res = await request(app).get('/v1/fragments').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBe('ok');
     expect(Array.isArray(res.body.fragments)).toBe(true);
   });
 
   test('authenticated user with no fragments gets an empty array', async () => {
-    const res = await request(app)
-      .get('/v1/fragments')
-      .auth('test-user1@fragments-testing.com', 'test-password1');
+    const res = await request(app).get('/v1/fragments').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body.fragments)).toBe(true);
   });
@@ -50,12 +41,10 @@ describe('GET /v1/fragments', () => {
   test('GET /v1/fragments returns IDs when expand=0', async () => {
     await request(app)
       .post('/v1/fragments')
-      .auth('test-user1@fragments-testing.com', 'test-password1')
+      .auth('user1@email.com', 'password1')
       .set('Content-Type', 'text/plain')
       .send('hello world');
-    const res = await request(app)
-      .get('/v1/fragments')
-      .auth('test-user1@fragments-testing.com', 'test-password1');
+    const res = await request(app).get('/v1/fragments').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
     expect(typeof res.body.fragments[0]).toBe('string');
   });
@@ -63,12 +52,12 @@ describe('GET /v1/fragments', () => {
   test('GET /v1/fragments?expand=1 returns expanded fragment objects', async () => {
     await request(app)
       .post('/v1/fragments')
-      .auth('test-user1@fragments-testing.com', 'test-password1')
+      .auth('user1@email.com', 'password1')
       .set('Content-Type', 'text/plain')
       .send('hello world');
     const res = await request(app)
       .get('/v1/fragments?expand=1')
-      .auth('test-user1@fragments-testing.com', 'test-password1');
+      .auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
     const fragment = res.body.fragments[0];
     expect(fragment).toHaveProperty('id');
