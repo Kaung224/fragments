@@ -35,7 +35,11 @@
                 {
                     "name": "AWS_S3_BUCKET_NAME",
                     "value": "kksan-fragments"
-                }
+                },
+                {
+  "name": "API_URL",
+  "value": "http://fragments-lb-1313824622.us-east-2.elb.amazonaws.com"
+}
             ],
             "environmentFiles": [],
             "mountPoints": [],
