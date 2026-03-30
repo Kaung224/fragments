@@ -1,6 +1,8 @@
 // src/routes/index.js
 const { authenticate } = require('../auth');
 const express = require('express');
+const { hostname } = require('os');
+const { createSuccessResponse } = require('../response');
 
 // version and author from package.json
 const { version, author } = require('../../package.json');
@@ -31,6 +33,20 @@ router.get('/', (req, res) => {
     version,
     timestamp: new Date().toISOString(),
   });
+});
+
+router.get('/', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache');
+  res.status(200).json(
+    createSuccessResponse({
+      // TODO: make sure these are changed for your name and repo
+      author,
+      githubUrl: 'https://github.com/your-github-account-username/fragments',
+      version,
+      // Include the hostname in the response
+      hostname: hostname(),
+    })
+  );
 });
 
 module.exports = router;

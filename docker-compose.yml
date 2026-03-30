@@ -4,10 +4,12 @@ services:
     init: true
     build: .
     environment:
-      - API_URL=http://localhost:8080
+      - API_URL=http://host.docker.internal:8080
       - HTPASSWD_FILE=tests/.htpasswd
       - FRAGMENTS_LOG_LEVEL=${FRAGMENTS_LOG_LEVEL:-info}
       - AWS_REGION=us-east-2
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
             # Use the LocalStack endpoint vs. AWS for S3 AWS SDK clients.
             # NOTE: we use Docker's internal network to the localstack container
       - AWS_S3_ENDPOINT_URL=http://localstack:4566
@@ -34,4 +36,4 @@ services:
       - "4566:4566"
     environment:
       - SERVICES=s3
-      - DEFAULT_REGION=us-east-2
+      # - DEFAULT_REGION=us-east-2

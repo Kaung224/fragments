@@ -1,10 +1,10 @@
 // src/model/data/aws/index.js
 
 // Temporary: still use MemoryDB for metadata until DynamoDB is added
-const MemoryDB = require('./memory-db');
+const MemoryDB = require('../memory/memory-db');
 const logger = require('../../../logger');
 
-const s3Client = require('./memory/s3Client');
+const s3Client = require('./s3Client');
 const { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 
 // Metadata DB (simulates DynamoDB)
@@ -81,9 +81,11 @@ async function listFragments(ownerId, expand = false) {
 }
 
 module.exports = {
-  metadata,
   writeFragmentData,
   readFragmentData,
   deleteFragment,
   listFragments,
+  readFragment: (ownerId, id) => metadata.get(ownerId, id),
+  writeFragment: (fragment) =>
+    metadata.put(fragment.ownerId, fragment.id, JSON.stringify(fragment)),
 };
