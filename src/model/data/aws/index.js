@@ -2,9 +2,9 @@
 
 // Temporary: still use MemoryDB for metadata until DynamoDB is added
 const MemoryDB = require('./memory-db');
-const logger = require('../../../../logger');
+const logger = require('../../../logger');
 
-const s3Client = require('./s3Client');
+const s3Client = require('./memory/s3Client');
 const { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 
 // Metadata DB (simulates DynamoDB)

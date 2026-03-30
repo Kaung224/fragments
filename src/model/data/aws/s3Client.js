@@ -1,5 +1,5 @@
 const { S3Client } = require('@aws-sdk/client-s3');
-const logger = require('../../../../logger');
+const logger = require('../../../logger');
 
 const getCredentials = () => {
   if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
