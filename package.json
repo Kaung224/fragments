@@ -1,6 +1,6 @@
 {
   "name": "fragments",
-  "version": "0.9.12",
+  "version": "0.9.13",
   "private": true,
   "description": "Fragments back-end API",
   "scripts": {
