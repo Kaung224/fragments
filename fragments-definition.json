@@ -1,109 +1,120 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-2:570232567209:task-definition/fragments-task:1",
-    "containerDefinitions": [
+  "taskDefinitionArn": "arn:aws:ecs:us-east-2:570232567209:task-definition/fragments-task:5",
+  "containerDefinitions": [
+    {
+      "name": "fragments-container",
+      "image": "570232567209.dkr.ecr.us-east-2.amazonaws.com/fragments:v0.9.6",
+      "cpu": 0,
+      "portMappings": [
         {
-            "name": "fragments-container",
-            "image": "khant333/fragments:latest",
-            "cpu": 0,
-            "portMappings": [
-                {
-                    "name": "fragments-container-80-tcp",
-                    "containerPort": 80,
-                    "hostPort": 80,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
-                }
-            ],
-            "essential": true,
-            "environment": [
-                {
-                    "name": "AWS_COGNITO_POOL_ID",
-                    "value": "us-east-1_LBs1QsAaS"
-                },
-                {
-                    "name": "FRAGMENTS_LOG_LEVEL",
-                    "value": "debug"
-                },
-                {
-                    "name": "PORT",
-                    "value": "80"
-                },
-                {
-                    "name": "AWS_COGNITO_CLIENT_ID",
-                    "value": "388182t7k96seep6pkljsskoeq"
-                },
-                {
-                    "name": "AWS_S3_BUCKET_NAME",
-                    "value": "kksan-fragments"
-                },
-                {
-  "name": "API_URL",
-  "value": "http://fragments-lb-1313824622.us-east-2.elb.amazonaws.com"
-}
-            ],
-            "environmentFiles": [],
-            "mountPoints": [],
-            "volumesFrom": [],
-            "ulimits": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-group": "/ecs/fragments-task",
-                    "awslogs-create-group": "true",
-                    "awslogs-region": "us-east-2",
-                    "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
-            },
-            "systemControls": []
+          "name": "fragments-container-80-tcp",
+          "containerPort": 8080,
+          "hostPort": 80,
+          "protocol": "tcp",
+          "appProtocol": "http"
         }
-    ],
-    "family": "fragments-task",
-    "taskRoleArn": "arn:aws:iam::570232567209:role/LabRole",
-    "executionRoleArn": "arn:aws:iam::570232567209:role/LabRole",
-    "networkMode": "awsvpc",
-    "revision": 1,
-    "volumes": [],
-    "status": "ACTIVE",
-    "requiresAttributes": [
+      ],
+      "essential": true,
+      "environment": [
         {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+          "name": "AWS_COGNITO_POOL_ID",
+          "value": "us-east-1_LBs1QsAaS"
         },
         {
-            "name": "ecs.capability.execution-role-awslogs"
+          "name": "AWS_REGION",
+          "value": "us-east-2"
         },
         {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+          "name": "FRAGMENTS_LOG_LEVEL",
+          "value": "info"
         },
         {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
+          "name": "API_URL",
+          "value": "http://fragments-lb-1313824622.us-east-2.elb.amazonaws.com"
         },
         {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+          "name": "PORT",
+          "value": "8080"
         },
         {
-            "name": "ecs.capability.task-eni"
+          "name": "AWS_S3_BUCKET_NAME",
+          "value": "kksan-fragments"
         },
         {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "AWS_COGNITO_CLIENT_ID",
+          "value": "388182t7k96seep6pkljsskoeq"
         }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2",
-        "FARGATE",
-        "MANAGED_INSTANCES"
-    ],
-    "requiresCompatibilities": [
-        "FARGATE"
-    ],
-    "cpu": "256",
-    "memory": "512",
-    "runtimePlatform": {
-        "cpuArchitecture": "X86_64",
-        "operatingSystemFamily": "LINUX"
+      ],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/fragments-task",
+          "awslogs-create-group": "true",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "systemControls": []
+    }
+  ],
+  "family": "fragments-task",
+  "taskRoleArn": "arn:aws:iam::570232567209:role/LabRole",
+  "executionRoleArn": "arn:aws:iam::570232567209:role/LabRole",
+  "networkMode": "awsvpc",
+  "revision": 5,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
     },
-    "registeredAt": "2026-03-30T22:57:22.461Z",
-    "registeredBy": "arn:aws:iam::570232567209:user/odl_user_2044021",
-    "tags": []
+    {
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+    }
+  ],
+  "placementConstraints": [],
+  "compatibilities": [
+    "EC2",
+    "FARGATE",
+    "MANAGED_INSTANCES"
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "256",
+  "memory": "512",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "registeredAt": "2026-03-31T00:02:54.763Z",
+  "registeredBy": "arn:aws:iam::570232567209:user/odl_user_2044021",
+  "tags": []
 }
