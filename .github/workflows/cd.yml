@@ -83,7 +83,7 @@ jobs:
           environment-variables: |
             FRAGMENTS_LOG_LEVEL=info
             NODE_ENV=production
-            PORT=80
+            PORT=8080
             API_URL=http://fragments-lb-1313824622.us-east-2.elb.amazonaws.com
             AWS_COGNITO_POOL_ID=us-east-1_LBs1QsAaS
             AWS_COGNITO_CLIENT_ID=388182t7k96seep6pkljsskoeq
