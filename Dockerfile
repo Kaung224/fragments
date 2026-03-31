@@ -31,8 +31,6 @@ COPY --chown=node:node . /app
 # THEN copy .htpasswd so it doesn't get overwritten
 COPY tests/.htpasswd /app/tests/.htpasswd
 
-USER node
-
 EXPOSE 8080
 
 HEALTHCHECK --interval=3m --timeout=30s --retries=3 \
