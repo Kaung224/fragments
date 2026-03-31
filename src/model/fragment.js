@@ -75,9 +75,6 @@ class Fragment {
     if (!data) {
       throw new Error(`fragment not found for id=${id}`);
     }
-    if (typeof data === 'string') {
-      return new Fragment(JSON.parse(data));
-    }
     return new Fragment(data);
   }
 
