@@ -3,6 +3,9 @@ services:
   fragments:
     init: true
     build: .
+    depends_on:
+      - localstack
+      - dynamodb-local
     environment:
       - API_URL=http://localhost:8080
       - HTPASSWD_FILE=tests/.htpasswd
