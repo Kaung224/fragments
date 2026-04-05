@@ -12,18 +12,18 @@ user1@email.com:password1
 
 HTTP/1.1 201
 [Asserts]
-header "Location" matches "^http://localhost:8080/v1/fragments/[A-Za-z0-9_-]+$"
+header "Location" matches "^http://host.docker.internal:8080/v1/fragments/[A-Za-z0-9_-]+$"
 jsonpath "$.status" == "ok"
 jsonpath "$.fragment.type" == "text/plain"
 jsonpath "$.fragment.size" == 19
 
-# 🔥 Capture ONLY the ID (fixes Docker localhost issue)
+# 🔥 Capture ONLY the ID 
 [Captures]
 fragmentId: header "Location" regex ".*/fragments/([A-Za-z0-9_-]+)$"
 
 # -------------------------------
 
-# 2. GET the fragment (correct endpoint + correct host)
+# 2. GET the fragment 
 GET http://host.docker.internal:8080/v1/fragments/{{fragmentId}}
 [BasicAuth]
 user1@email.com:password1
