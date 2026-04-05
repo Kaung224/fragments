@@ -39,8 +39,16 @@
         },
         {
           "name": "AWS_DYNAMODB_TABLE_NAME",
-          "value": "your-table-name-here"
-      }
+          "value": "fragments"
+      },
+        {
+  "name": "AWS_S3_BUCKET_NAME",
+  "value": "fragments"
+},
+{
+  "name": "AWS_REGION",
+  "value": "us-east-2"
+}
       ],
       "environmentFiles": [],
       "mountPoints": [],

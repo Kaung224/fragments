@@ -54,8 +54,13 @@ class Fragment {
     }
 
     return results.map((fragment) => {
+      // Parse if it's a string (memory storage), otherwise use as-is (DynamoDB)
       if (typeof fragment === 'string') {
-        fragment = JSON.parse(fragment);
+        try {
+          fragment = JSON.parse(fragment);
+        } catch (err) {
+          throw new Error(`Failed to parse fragment: ${err.message}`);
+        }
       }
 
       return new Fragment(fragment);
