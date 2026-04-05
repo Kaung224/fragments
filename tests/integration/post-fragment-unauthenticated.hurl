@@ -1,5 +1,5 @@
 # POST without authentication
-POST http://host.docker.internal:8080/v1/fragments
+POST http://localhost:8080/v1/fragments
 Content-Type: text/plain
 
 `Hello world`
