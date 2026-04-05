@@ -121,6 +121,9 @@ jobs:
       - name: Build Containers
         run: docker compose up -d
 
+      - name: Wait for API to start
+        run: sleep 5
+
       - name: Setup Local AWS Resources
         run: ./scripts/local-aws-setup.sh
 
