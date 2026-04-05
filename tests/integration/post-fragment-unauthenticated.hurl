@@ -1,5 +1,5 @@
 # POST without authentication
-POST http://localhostfragments:8080/v1/fragments
+POST http://fragments:8080/v1/fragments
 Content-Type: text/plain
 
 `Hello world`

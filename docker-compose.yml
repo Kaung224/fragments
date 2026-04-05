@@ -7,7 +7,7 @@ services:
       - localstack
       - dynamodb-local
     environment:
-      - API_URL=http://localhost:8080
+      - API_URL=http://fragments:8080
       - HTPASSWD_FILE=tests/.htpasswd
       - FRAGMENTS_LOG_LEVEL=${FRAGMENTS_LOG_LEVEL:-info}
       - AWS_REGION=us-east-2
