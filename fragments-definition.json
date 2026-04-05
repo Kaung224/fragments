@@ -36,7 +36,11 @@
         {
           "name": "AWS_COGNITO_CLIENT_ID",
           "value": "388182t7k96seep6pkljsskoeq"
-        }
+        },
+        {
+          "name": "AWS_DYNAMODB_TABLE_NAME",
+          "value": "your-table-name-here"
+      }
       ],
       "environmentFiles": [],
       "mountPoints": [],

@@ -121,14 +121,24 @@ jobs:
       - name: Build Containers
         run: docker compose up -d
 
-      - name: Wait for LocalStack and API
-        run: sleep 10
-
       - name: Check running containers
         run: docker ps -a
 
       - name: Show API logs
-        run: docker logs fragments
+        run: docker logs fragments-fragments-1
+
+      - name: Wait for API health check
+        run: |
+          for i in {1..30}; do
+            STATUS=$(docker inspect --format='{{json .State.Health.Status}}' fragments-fragments-1)
+            echo "API health: $STATUS"
+            if [ "$STATUS" = "\"healthy\"" ]; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "API did not become healthy in time"
+          exit 1
 
       - name: Setup Local AWS Resources
         run: ./scripts/local-aws-setup.sh
