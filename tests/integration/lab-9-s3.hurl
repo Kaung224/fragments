@@ -3,7 +3,7 @@
 # -------------------------------
 
 # 1. POST a new text fragment
-POST http://localhost:8080/v1/fragments
+POST http://fragments:8080/v1/fragments
 Content-Type: text/plain
 [BasicAuth]
 user1@email.com:password1
@@ -12,7 +12,7 @@ user1@email.com:password1
 
 HTTP/1.1 201
 [Asserts]
-header "Location" matches "^http://localhost:8080/v1/fragments/[A-Za-z0-9_-]+$"
+header "Location" matches "^http://fragments:8080/v1/fragments/[A-Za-z0-9_-]+$"
 jsonpath "$.status" == "ok"
 jsonpath "$.fragment.type" == "text/plain"
 jsonpath "$.fragment.size" == 19
@@ -24,7 +24,7 @@ fragmentId: header "Location" regex ".*/fragments/([A-Za-z0-9_-]+)$"
 # -------------------------------
 
 # 2. GET the fragment 
-GET http://localhost:8080/v1/fragments/{{fragmentId}}
+GET http://fragments:8080/v1/fragments/{{fragmentId}}
 [BasicAuth]
 user1@email.com:password1
 
@@ -36,7 +36,7 @@ body == "This is a fragment!"
 # -------------------------------
 
 # 3. DELETE the fragment
-DELETE http://localhost:8080/v1/fragments/{{fragmentId}}
+DELETE http://fragments:8080/v1/fragments/{{fragmentId}}
 [BasicAuth]
 user1@email.com:password1
 
@@ -47,7 +47,7 @@ jsonpath "$.status" == "ok"
 # -------------------------------
 
 # 4. GET again → should now be 404
-GET http://localhost:8080/v1/fragments/{{fragmentId}}
+GET http://fragments:8080/v1/fragments/{{fragmentId}}
 [BasicAuth]
 user1@email.com:password1
 

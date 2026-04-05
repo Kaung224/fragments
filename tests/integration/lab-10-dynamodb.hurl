@@ -1,5 +1,5 @@
 # Create JSON fragment
-POST http://localhost:8080/v1/fragments
+POST http://fragments:8080/v1/fragments
 Content-Type: application/json
 [BasicAuth]
 user1@email.com:password1
@@ -19,7 +19,7 @@ user1@email.com:password1
 HTTP/1.1 200
 
 # Create Markdown fragment
-POST http://localhost:8080/v1/fragments
+POST http://fragments:8080/v1/fragments
 Content-Type: text/markdown
 [BasicAuth]
 user1@email.com:password1
@@ -39,7 +39,7 @@ user1@email.com:password1
 HTTP/1.1 200
 
 # List fragments (ids only)
-GET http://localhost:8080/v1/fragments
+GET http://fragments:8080/v1/fragments
 [BasicAuth]
 user1@email.com:password1
 
@@ -63,7 +63,7 @@ user1@email.com:password1
 HTTP/1.1 404
 
 # List again
-GET http://localhost:8080/v1/fragments
+GET http://fragments:8080/v1/fragments
 [BasicAuth]
 user1@email.com:password1
 
