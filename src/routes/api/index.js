@@ -42,6 +42,7 @@ router.get('/fragments/:id/info', require('./getByIdInfo'));
 router.get(/^\/fragments\/([^/]+)\.([^/]+)$/, require('./getByIdExt'));
 router.get('/fragments/:id', require('./read'));
 router.post('/fragments', rawBody(), require('./post'));
+router.put('/fragments/:id', rawBody(), require('./update'));
 router.delete('/fragments/:id', require('./delete'));
 
 logger.info('API routes initialized successfully');
