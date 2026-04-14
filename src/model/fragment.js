@@ -22,7 +22,6 @@ class Fragment {
     if (!type || !Fragment.isSupportedType(type)) {
       throw new Error(`invalid or unsupported type: ${type}`);
     }
-
     if (size < 0 || typeof size !== 'number' || !Number.isInteger(size)) {
       throw new Error(`size must be a non-negative integer, got ${size}`);
     }
@@ -42,7 +41,6 @@ class Fragment {
    * @returns Promise<Array<Fragment>>
    */
   static async byUser(ownerId, expand = false) {
-    // TODO
     const results = await listFragments(ownerId, expand);
 
     if (!results) {
@@ -54,7 +52,6 @@ class Fragment {
     }
 
     return results.map((fragment) => {
-      // Parse if it's a string (memory storage), otherwise use as-is (DynamoDB)
       if (typeof fragment === 'string') {
         try {
           fragment = JSON.parse(fragment);
@@ -62,7 +59,6 @@ class Fragment {
           throw new Error(`Failed to parse fragment: ${err.message}`);
         }
       }
-
       return new Fragment(fragment);
     });
   }
@@ -74,8 +70,6 @@ class Fragment {
    * @returns Promise<Fragment>
    */
   static async byId(ownerId, id) {
-    // TODO
-    // TIP: make sure you properly re-create a full Fragment instance after getting from db.
     const data = await readFragment(ownerId, id);
     if (!data) {
       throw new Error(`fragment not found for id=${id}`);
@@ -90,7 +84,6 @@ class Fragment {
    * @returns Promise<void>
    */
   static delete(ownerId, id) {
-    // TODO
     return deleteFragment(ownerId, id);
   }
 
@@ -99,7 +92,6 @@ class Fragment {
    * @returns Promise<void>
    */
   save() {
-    // TODO
     this.updated = new Date().toISOString();
     return writeFragment(this);
   }
@@ -109,7 +101,6 @@ class Fragment {
    * @returns Promise<Buffer>
    */
   getData() {
-    // TODO
     return readFragmentData(this.ownerId, this.id);
   }
 
@@ -119,15 +110,11 @@ class Fragment {
    * @returns Promise<void>
    */
   async setData(data) {
-    // TODO
-    // TIP: make sure you update the metadata whenever you change the data, so they match
     if (!Buffer.isBuffer(data)) {
       throw new Error('data must be a Buffer');
     }
-
     this.size = data.length;
     this.updated = new Date().toISOString();
-
     await writeFragmentData(this.ownerId, this.id, data);
     return this.save();
   }
@@ -147,7 +134,6 @@ class Fragment {
    * @returns {boolean} true if fragment's type is text/*
    */
   get isText() {
-    // TODO
     return this.mimeType.startsWith('text/');
   }
 
@@ -156,7 +142,6 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    // TODO
     const base = this.mimeType;
     if (base === 'text/plain') {
       return ['text/plain'];
@@ -181,19 +166,38 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    // TODO
-    const { type } = contentType.parse(value);
+    try {
+      const { type } = contentType.parse(value);
+      const supportedTypes = [
+        'text/plain',
+        'text/html',
+        'text/markdown',
+        'application/json',
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+      ];
+      return supportedTypes.includes(type);
+    } catch {
+      return false;
+    }
+  }
 
-    const supportedTypes = [
-      'text/plain',
-      'text/html',
-      'text/markdown',
-      'application/json',
-      'image/jpeg',
-      'image/png',
-    ];
-
-    return supportedTypes.includes(type);
+  /**
+   * Returns a JSON representation of the fragment
+   * @returns {object}
+   */
+  toJSON() {
+    return {
+      id: this.id,
+      ownerId: this.ownerId,
+      created: this.created,
+      updated: this.updated,
+      type: this.type,
+      size: this.size,
+      formats: this.formats,
+    };
   }
 }
 

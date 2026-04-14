@@ -37,13 +37,9 @@ module.exports = async (req, res) => {
     if (err.message.includes('not found')) {
       return res.status(404).json({ status: 'error', message: 'Fragment not found' });
     }
-    return res.status(500).json({
-      status: 'error',
-      message: err.message,
-    });
+    return res.status(500).json({ status: 'error', message: err.message });
   }
 
-  // BUG FIX 1: Reject if the Content-Type doesn't match the existing fragment's type
   const existingType = contentType.parse(fragment.type).type;
   if (type !== existingType) {
     logger.warn(`Content-Type mismatch: request=${type}, fragment=${existingType}`);
@@ -54,7 +50,6 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // BUG FIX 2: Update size to match new body, don't reassign type
     fragment.size = req.body.length;
 
     await fragment.save();
