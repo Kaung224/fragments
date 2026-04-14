@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
   try {
     rawType = req.get('Content-Type');
     type = contentType.parse(rawType).type;
-  } catch (err) {
+  } catch () {
     return res.status(415).json({ status: 'error', message: 'Invalid Content-Type header' });
   }
 
