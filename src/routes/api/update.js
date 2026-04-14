@@ -37,7 +37,10 @@ module.exports = async (req, res) => {
     if (err.message.includes('not found')) {
       return res.status(404).json({ status: 'error', message: 'Fragment not found' });
     }
-    return res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+    return res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+    });
   }
 
   // BUG FIX 1: Reject if the Content-Type doesn't match the existing fragment's type
