@@ -64,6 +64,9 @@ module.exports = async (req, res) => {
     res.status(200).json({ status: 'ok', fragment: fragment.toJSON() });
   } catch (err) {
     logger.error(`Error updating fragment: ${err.message}`);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+    res.status(500).json({
+      status: 'error',
+      message: err.message,
+    });
   }
 };
